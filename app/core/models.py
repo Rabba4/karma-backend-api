@@ -1,6 +1,7 @@
 """
 Database models.
 """
+from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import (
     AbstractBaseUser,
@@ -43,3 +44,16 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
+
+
+class Tratamiento(models.Model):
+    """Tratamiento object."""
+    codigo = models.CharField(max_length=8, unique=True)
+    nombre = models.CharField(max_length=255)
+    descripcion = models.CharField(max_length=255)
+    duracion_minutos = models.IntegerField()
+    familia = models.CharField(max_length=2, blank=True, null=True)
+    precio_base = models.DecimalField(max_digits=5, decimal_places=2)
+
+    def __str__(self):
+        return self.nombre
